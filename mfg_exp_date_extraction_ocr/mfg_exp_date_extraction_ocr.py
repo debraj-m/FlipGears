@@ -2,6 +2,7 @@
 
 import base64
 import datetime
+import json
 import os
 import tempfile
 from difflib import SequenceMatcher
@@ -12,11 +13,8 @@ import easyocr
 import pandas as pd
 import streamlit as st
 from google.cloud import vision
+from google.oauth2 import service_account
 from langchain_openai.chat_models import ChatOpenAI
-
-
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'keys.json'
-
 
 if 'video_processed' not in st.session_state:
     st.session_state['video_processed'] = False
@@ -24,9 +22,13 @@ if 'video_processed' not in st.session_state:
 if 'csv_exported' not in st.session_state:
     st.session_state['csv_exported'] = False
 
+decoded_bytes = base64.b64decode(st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
+decoded_string = decoded_bytes.decode('utf-8') 
 
 
-client = vision.ImageAnnotatorClient()
+
+
+client = vision.ImageAnnotatorClient(credentials=service_account.Credentials.from_service_account_info(json.loads(decoded_string)))
 ocr_reader = easyocr.Reader(['en'])
 
 total_detections = {}
@@ -71,7 +73,7 @@ def are_similar(text1, text2, threshold=0.4):
     return match_ratio > threshold
 
 def extract_info_from_img(context: str):
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0,api_key=st.secrets["OPENAI_API_KEY"])
     
     refined_prompt = f"""
     The following text contains details related to the manufacturing and expiry dates of a product:
