@@ -1,5 +1,3 @@
-
-
 import base64
 import datetime
 import json
@@ -211,5 +209,5 @@ if video_file is not None:
                            data=st.session_state['csv_data'],
                            file_name='detections.csv',
                            mime='text/csv')
-
-#   
+    os.remove(tfile.name)
+   
