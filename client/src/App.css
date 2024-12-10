@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Medium';
+    src: url(./assets/fonts/Otterco-Medium.otf);
+}
+
+.Medium{
+font-family:Medium;
+}
+@font-face {
+    font-family: 'Regular';
+    src: url(./assets/fonts/Otterco-Regular.otf);
+}
+.Regular{
+font-family:Regular;
+}
+
