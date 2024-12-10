@@ -1,4 +1,4 @@
-# FlipGears
+# FlipGear
 
 
 <p align="center">
