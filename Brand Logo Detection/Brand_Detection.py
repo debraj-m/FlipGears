@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import time
 from skimage.metrics import structural_similarity
-
+from datetime import datetime
 
 #initializing model with pre determined weights obtained after training
 model = YOLO(r"FlipkartGrid\logo_detection_extended.pt")
@@ -20,6 +20,8 @@ prev_class_name='NIL'
 found=False
 while True: #using OpenCV to take input from webcam
     ret, frame = video.read()
+    if(ret!=True):
+        break
     start=start+1
     frame_curr=frame
     res=frame
@@ -43,7 +45,8 @@ while True: #using OpenCV to take input from webcam
                  cv.rectangle(res, (x1, y1), (x2, y2), (0, 255, 0), 2)
                  cv.putText(res, f"{class_name}: {confidence}", (x1, y1 - 10),cv.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2)
                  key=cv.waitKey(2000)
-                 product_detections[class_id]=product_detections[class_id]+1
+                 Brand=np.append(Brand,str.upper(class_name))
+                 Timestamp=np.append(Timestamp,datetime.now())
                  found=True
                  start_time=time.time()
                 prev_class_name=class_name
@@ -59,12 +62,8 @@ while True: #using OpenCV to take input from webcam
         break
 video.release()
 cv.destroyAllWindows()
-dict={}
-for i in range(len(product_detections)):
-    dict[(model.names[i])]=product_detections[i]
-print(dict)
-dict_list=[dict]
-df=pd.DataFrame(dict_list)
+dict={'Timestamp':Timestamp,'Brand':Brand}
+df=pd.DataFrame(dict)
 csv_file = 'Brand Detection Counts.csv' 
 df.to_csv(csv_file)# the excel sheet is saved as Brand Detection Counts
 print(f"Brand detections have been saved to {csv_file}")
