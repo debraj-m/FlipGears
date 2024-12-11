@@ -13,7 +13,7 @@ from models.base_model import BaseModel, DetectionModels
 class CountingModel(BaseModel):
     def __init__(self):
         self._name = DetectionModels.COUNT_MODEL
-        self.model = YOLO(r"FlipkartGrid/best.pt", verbose=False)
+        self.model = YOLO(r"ml_models/counting_model/pre_trained_models/trained_model.pt", verbose=False)
         self.detections = []
         self.previous_frame = None
 

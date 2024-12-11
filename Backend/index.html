@@ -8,6 +8,15 @@
 <body>
     <h1>Real-Time YOLO Object Detection</h1>
     
+    <!-- Dropdown for selecting model -->
+    <label for="modelSelect">Select Detection Model:</label>
+    <select id="modelSelect">
+        <option value="freshness-detection">Freshness Detection</option>
+        <option value="brand-detection">Brand Detection</option>
+        <option value="mfg-expiry-detection-model">MFG Expiry Detection</option>
+        <option value="count-model">Count Model</option>
+    </select>
+
     <video id="video" autoplay muted></video>
     <img id="processed" alt="Processed Frame" style="max-width: 100%;"/>
     
@@ -25,6 +34,7 @@
         const startBtn = document.getElementById('startBtn');
         const stopBtn = document.getElementById('stopBtn');
         const csvResults = document.getElementById('csvResults');
+        const modelSelect = document.getElementById('modelSelect');
         
         let ws = null;
         let stream = null;
@@ -39,7 +49,8 @@
                     stream = await navigator.mediaDevices.getUserMedia(constraints);
                     video.srcObject = stream;
 
-                    ws = new WebSocket("ws://127.0.0.1:8000/ws/freshness-detection");
+                    const selectedModel = modelSelect.value;  // Get the selected model
+                    ws = new WebSocket(`ws://127.0.0.1:8000/ws/${selectedModel}`);
 
                     ws.onopen = () => {
                         ws.send(JSON.stringify({ "type": "start" }));
