@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { FaLinkedin } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
-const Team = () => {
+const Team =() => {
 
     const data=[
         {
@@ -34,18 +34,18 @@ const Team = () => {
       const [hovered4, setHovered4] = useState(false);
 
   return (
-    <section id="team" className="Medium w-full px-[7vw] bg-[#efeeed] py-[4vw] text-black rounded-t-[8vw]">
+    <section  id="team" className="Medium w-full px-[7vw] bg-[#efeeed] py-[4vw] text-black rounded-t-[8vw]">
       <h1
         id="team_title"
-        className="text-[6vw] font-normal capitalize text-center mb-6 text-grey-100"
+        className="text-[4vh] lg:text-[6vw] font-normal capitalize text-center mb-6 text-grey-100"
       >Our Team</h1>
 
            <div className="flex items-center justify-between py-[2vw] px-[4vw] border-t-[.15vw] border-black hover:bg-zinc-800 hover:text-white transition-colors duration-500 " onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
           >
-             <h4 className="text-[2.3vw] font-medium capitalize">
+             <h4 className="text-[2vh] lg:text-[2.3vw] text-[2.3vw] font-medium capitalize">
               {data[0].name}
             </h4>
-            <div className={` w-[15vw] h-[15vw] overflow-hidden rounded-full  absolute left-[45%]  transition-transform  transition-transform ${
+            <div className={`lg:w-[15vw] lg:h-[15vw] w-[8vh] h-[8vh] lg:left-[45%] left-[60%] overflow-hidden rounded-full  absolute  transition-transform  transition-transform ${
                 hovered ? "scale-1 animate-zoom-out" : "hidden"
               }`}>
 
@@ -64,10 +64,10 @@ const Team = () => {
 
           <div className="flex items-center justify-between py-[2vw] px-[4vw] border-t-[.15vw] border-black hover:bg-zinc-800 hover:text-white transition-colors duration-500" onMouseEnter={() => setHovered1(true)} onMouseLeave={() => setHovered1(false)}
           >
-             <h4 className="text-[2.3vw] font-medium capitalize">
+             <h4 className="text-[2vh] lg:text-[2.3vw] text-[2.3vw]font-medium capitalize">
               {data[1].name}
             </h4>
-            <div className={` w-[15vw] h-[15vw] transition-transform duration-500 overflow-hidden rounded-full  absolute left-[45%]   ${
+            <div className={`lg:w-[15vw] lg:h-[15vw] w-[8vh] h-[8vh] lg:left-[45%] left-[60%] transition-transform duration-500 overflow-hidden rounded-full  absolute   ${
                 hovered1 ? "scale-1 animate-zoom-out" : "hidden"
               }`}>
 
@@ -82,10 +82,10 @@ const Team = () => {
           
           <div className="capitalize flex items-center justify-between py-[2vw] px-[4vw] border-t-[.15vw] border-black hover:bg-zinc-800 hover:text-white transition-colors duration-500" onMouseEnter={() => setHovered2(true)} onMouseLeave={() => setHovered2(false)}
           >
-             <h4 className="text-[2.3vw] font-medium ">
+             <h4 className="text-[2vh] lg:text-[2.3vw] text-[2.3vw] font-medium ">
               {data[2].name}
             </h4>
-            <div className={` w-[15vw] h-[15vw] overflow-hidden rounded-full  absolute left-[45%]  transition-transform  transition-transform ${
+            <div className={` lg:w-[15vw] lg:h-[15vw] w-[8vh] h-[8vh] lg:left-[45%] left-[60%] overflow-hidden rounded-full  absolute   transition-transform  transition-transform ${
                 hovered2 ? "scale-1 animate-zoom-out" : "hidden"
               }`}>
 
@@ -100,10 +100,10 @@ const Team = () => {
           
           <div className="capitalize flex items-center justify-between py-[2vw] px-[4vw] border-t-[.15vw] border-black hover:bg-zinc-800 hover:text-white transition-colors duration-500" onMouseEnter={() => setHovered3(true)} onMouseLeave={() => setHovered3(false)}
           >
-             <h4 className="text-[2.3vw] font-medium ">
+             <h4 className="text-[2vh] lg:text-[2.3vw] text-[2.3vw] font-medium ">
               {data[3].name}
             </h4>
-            <div className={` w-[15vw] h-[15vw] overflow-hidden rounded-full  absolute left-[45%]  transition-transform  transition-transform ${
+            <div className={`lg:w-[15vw] lg:h-[15vw] w-[8vh] h-[8vh] lg:left-[45%] left-[60%] overflow-hidden rounded-full  absolute  transition-transform  transition-transform ${
                 hovered3 ? "scale-1 animate-zoom-out" : "hidden"
               }`}>
 
@@ -118,10 +118,10 @@ const Team = () => {
 
           <div className="capitalize flex items-center justify-between py-[2vw] px-[4vw] border-t-[.15vw] border-black hover:bg-zinc-800 hover:text-white transition-colors duration-500" onMouseEnter={() => setHovered4(true)} onMouseLeave={() => setHovered4(false)}
           >
-             <h4 className="text-[2.3vw] font-medium ">
+             <h4 className="text-[2vh] lg:text-[2.3vw] text-[2.3vw] font-medium ">
               {data[4].name}
             </h4>
-            <div className={` w-[15vw] h-[15vw] overflow-hidden rounded-full  absolute left-[45%]  transition-transform  transition-transform ${
+            <div className={`lg:w-[15vw] lg:h-[15vw] w-[8vh] h-[8vh] lg:left-[45%] left-[60%] overflow-hidden rounded-full  absolute   transition-transform  transition-transform ${
                 hovered4 ? "scale-1 animate-zoom-out" : "hidden"
               }`}>
 
@@ -140,3 +140,5 @@ const Team = () => {
 };
 
 export default Team;
+
+
