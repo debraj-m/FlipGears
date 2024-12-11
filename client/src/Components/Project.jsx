@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 function Project() {
   const navigate = useNavigate(); // Use the useNavigate hook for navigation
+  navigate("/Full-Project"); // Use navigate as a function
 
   const handleClick = () => {
-    navigate("/Full-Project"); // Use navigate as a function
+    window.open("https://drive.google.com/file/d/1cdE9Cxu1mHzI7QZmaEY2gVpdpp9SiMC2/view?usp=sharin", "_blank");
   };
 
   return (

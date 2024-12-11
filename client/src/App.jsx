@@ -45,7 +45,7 @@ requestAnimationFrame(raf);
           <Loader />
           <Navbar />
           <Content />
-          <Heading />
+          <Heading/>
           <Services />
           <Model />
           <Project />
