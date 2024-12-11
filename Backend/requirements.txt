@@ -1,0 +1,15 @@
+numpy
+pandas
+fastapi
+ultralytics
+torch
+uvicorn
+websockets
+opencv-python
+colorama
+opencv-contrib-python
+python-multipart
+uvicorn
+scikit-learn
+scikit-image
+paddleocr
