@@ -13,3 +13,4 @@ uvicorn
 scikit-learn
 scikit-image
 paddleocr
+paddlepaddle
