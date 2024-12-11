@@ -24,10 +24,10 @@ def parse_date_multiple_methods(date_str):
 
 def find_expiry_date_expression_matching(text):
     date_patterns = [
-        r'EXP(?:IRY)?[\s:]*(\d{2}[-/]\d{2}[-/]\d{2,4})',
-        r'EXP(?:IRY)?[\s:]*(\d{2}[-/][A-Za-z]{3}[-/]\d{2,4})',
-        r'BEST[\s]*(?:BEFORE|BY)[\s:]*(\d{2}[-/]\d{2}[-/]\d{2,4})',
-        r'USE[\s]*(?:BEFORE|BY)[\s:]*(\d{2}[-/]\d{2}[-/]\d{2,4})'
+        r'EXP(?:IRY)?[\s:]*(\d{2}[-/\s]\d{2}[-/\s]\d{2,4})',
+        r'EXP(?:IRY)?[\s:]*(\d{2}[-/\s][A-Za-z]{3}[-/\s]\d{2,4})',
+        r'BEST[\s]*(?:BEFORE|BY)[\s:]*(\d{2}[-/\s]\d{2}[-/\s]\d{2,4})',
+        r'USE[\s]*(?:BEFORE|BY)[\s:]*(\d{2}[-/\s]\d{2}[-/\s]\d{2,4})'
     ]
     for pattern in date_patterns:
         match = re.search(pattern,text,re.IGNORECASE)
@@ -63,6 +63,8 @@ product = np.array([])
 while True:
     found=False
     ret,frame=video.read()
+    if(ret!=True):
+        break
     l=frame.shape[0]
     b=frame.shape[1]
     frame=cv.rectangle(frame, (int(b/4),int(l/4)),(int((3*b)/4),int((3*l)/4)),(0,0,255), 2)
