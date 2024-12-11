@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time YOLO Prediction Stream</title>
+</head>
+<body>
+    <h1>Real-Time YOLO Object Detection</h1>
+    
+    <video id="video" autoplay muted></video>
+    <img id="processed" alt="Processed Frame" style="max-width: 100%;"/>
+    
+    <br>
+    
+    <button id="startBtn">Start Streaming</button>
+    <button id="stopBtn" disabled>Stop Streaming</button>
+    
+    <h2>Detection Results (CSV):</h2>
+    <div id="csvResults"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const processedImage = document.getElementById('processed');
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const csvResults = document.getElementById('csvResults');
+        
+        let ws = null;
+        let stream = null;
+        let intervalId = null;
+
+        const constraints = { video: true };
+
+        // Start streaming from webcam
+        async function startStreaming() {
+            if (!ws) {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    video.srcObject = stream;
+
+                    ws = new WebSocket("ws://127.0.0.1:8000/ws/freshness-detection");
+
+                    ws.onopen = () => {
+                        ws.send(JSON.stringify({ "type": "start" }));
+                        console.log("Streaming started.");
+                    };
+
+                    ws.onmessage = (event) => {
+                        const message = JSON.parse(event.data);
+                        console.log(message.type)
+                        if (message.type === "frame") {
+                            processedImage.src = 'data:image/jpeg;base64,' + message.frame;
+                        } else if (message.type === "detections") {
+
+                            const base64Csv = message.data;
+                            const csvBlob = new Blob([atob(base64Csv)], { type: "text/csv" });
+                            const csvUrl = URL.createObjectURL(csvBlob);
+                            console.log("Got CSV Data", csvUrl)
+
+                            const link = document.createElement('a');
+                            link.href = csvUrl;
+                            link.download = 'detections.csv';
+                            link.textContent = 'Download Detections CSV';
+                            csvResults.innerHTML = ''; // Clear previous content
+                            csvResults.appendChild(link);
+                        } else if (message.type === "stop") {
+                            console.log("Server indicated safe to close connection.");
+                            stopStreaming(); // Close connection on server's stop
+                        }
+                    };
+
+                    const videoTrack = stream.getVideoTracks()[0];
+                    const imageCapture = new ImageCapture(videoTrack);
+
+                    const sendFrame = () => {
+                        imageCapture.grabFrame().then(frame => {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = frame.width;
+                            canvas.height = frame.height;
+                            ctx.drawImage(frame, 0, 0);
+
+                            canvas.toBlob(blob => {
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                    const base64Data = reader.result.split(',')[1];
+                                    if (ws.readyState === WebSocket.OPEN) {
+                                        ws.send(JSON.stringify({
+                                            "type": "frame",
+                                            "frame": base64Data
+                                        }));
+                                    }
+                                };
+                                reader.readAsDataURL(blob);
+                            });
+                        });
+                    };
+
+                    // Capture and send frames at ~30 FPS
+                    intervalId = setInterval(sendFrame, 120);
+                    stopBtn.disabled = false;
+                } catch (error) {
+                    console.error("Error accessing webcam: ", error);
+                }
+            }
+        }
+
+        // Stop streaming
+        function stopStreaming() {
+            if (ws) {
+                ws.send(JSON.stringify({ "type": "stop" }));
+                // ws.close();
+                ws = null;
+            }
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+            clearInterval(intervalId);
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            startBtn.disabled = true;
+            startStreaming();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            stopBtn.disabled = true;
+            stopStreaming();
+        });
+    </script>
+</body>
+</html>
