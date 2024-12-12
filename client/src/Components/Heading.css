@@ -1,45 +1,45 @@
 /* Heading.css */
 .medium {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  position: relative;
+  display: inline-flex;
+}
+
+.flip {
+  display: inline-block;
+  animation: flipAnimation 2.5s 7s forwards;
+}
+
+.slide {
+  display: inline-block;
+  animation: slideAnimation 2.5s 7s forwards;
+}
+
+/* Keyframes for flip animation */
+@keyframes flipAnimation {
+  0% {
+    transform: rotateZ(0);
   }
-  
-  .heading {
-    position: relative;
-    display: inline-flex;
+  50% {
+    transform: rotateZ(180deg);
   }
-  
-  .flip {
-    display: inline-block;
-    animation: flipAnimation 2.5s forwards;
+  100% {
+    transform: rotateZ(360deg);
   }
-  
-  .slide {
-    display: inline-block;
-    animation: slideAnimation 2.5s forwards;
+}
+
+/* Keyframes for slide animation */
+@keyframes slideAnimation {
+  0% {
+    transform: translateX(-100%);
   }
-  
-  /* Keyframes for flip animation */
-  @keyframes flipAnimation {
-    0% {
-      transform: rotateZ(0);
-    }
-    50% {
-      transform: rotateZ(180deg);
-    }
-    100% {
-      transform: rotateZ(360deg);
-    }
+  100% {
+    transform: translateX(0);
   }
-  
-  /* Keyframes for slide animation */
-  @keyframes slideAnimation {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
+}
   

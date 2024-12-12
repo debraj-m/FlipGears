@@ -92,7 +92,7 @@ const handleClick = () => {
             return(
         <div key={index} className='Regular w-full lg:h-[100vw]  bg-[#efeeed] relative flex flex-col justify-center items-center rounded-t-[8vw] mb-[4vw]'>
 
-        <h1 className='flex text-[2.8vh] mt-[3vh] lg:mt-[0vh] lg:text-[3.4vw] Medium capitalize'>
+        <h1 className='flex justify-center items-center text-[2.8vh] mt-[3vh] lg:mt-[0vh] lg:text-[3.4vw] Medium capitalize'>
             <img src={elem.img} alt="...." />{elem.name}
     
         </h1>
@@ -100,7 +100,7 @@ const handleClick = () => {
         <h2 className='text-[1.5vh] lg:text-[1.6vw] w-[80%] text-center  leading-[1.9vh] lg:leading-[2vw]'> 
         <span className='text-[1.8vh] lg:text-[2vw] font-semibold '>Purpose: </span>{elem.purpose}</h2>
 
-        <div className='w-full h-[25vh] lg:h-[30vw] relative flex justify-evenly items-center bg-[#efeeed]  rounded-b-[8vw]'>
+        <div className='w-full h-[35vh] lg:h-[30vw] relative flex justify-evenly items-center bg-[#efeeed]  rounded-b-[8vw]'>
 
             <div className='w-[45%] h-full gap-[2vw] flex flex-col relative justify-center left-[3vw] items-center'>
                 <div className='flex flex-col gap-[.5vw]'>

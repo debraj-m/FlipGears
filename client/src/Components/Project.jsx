@@ -6,7 +6,7 @@ function Project() {
   navigate("/Full-Project"); // Use navigate as a function
 
   const handleClick = () => {
-    window.open("https://drive.google.com/file/d/1cdE9Cxu1mHzI7QZmaEY2gVpdpp9SiMC2/view?usp=sharin", "_blank");
+    window.open("https://docs.google.com/document/d/1Ujv-BaQKyh2YoTNwY7MhMI08Y78Ok8x_rtXki8HO4Qs/edit?tab=t.0", "_blank");
   };
 
   return (
