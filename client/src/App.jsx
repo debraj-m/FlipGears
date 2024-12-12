@@ -11,7 +11,9 @@ import Project from './Components/Project.jsx';
 import FullProject from './Components/FullProject.jsx';
 import Loader from './Components/Loader.jsx';
 
-import Lenis from 'Lenis';
+// Correct import
+import Lenis from "@studio-freight/lenis";
+
 
 function App() {
 
