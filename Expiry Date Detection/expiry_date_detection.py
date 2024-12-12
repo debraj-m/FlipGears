@@ -46,8 +46,25 @@ def find_expiry_date_brute(text):
             parsed_date = parse_date_multiple_methods(match)
             if parsed_date:
                 valid_dates.append(parsed_date)
+    if valid_dates:
+        return max(valid_dates)
+    else:
+        date_pattern = r'(\d{2}[-/]\d{2,4})'
+        valid_dates = []
     
+        matches = re.findall(date_pattern, text, re.IGNORECASE)
+        
+        for match in matches:
+            normalized_date = match.replace('-', '/')
+            date_str = f"01/{normalized_date}"
+            try:
+                parsed_date = dateutil.parser.parse(date_str,dayfirst=True)
+                valid_dates.append(parsed_date)
+            except ValueError:
+                continue
     return max(valid_dates) if valid_dates else None
+            
+        
 
 model = PaddleOCR(lang='en',use_angle_cls=False)
 video = cv.VideoCapture(0)
