@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
+import "./Heading.css"; // Import a separate CSS file for styling
 
 function Heading() {
+  return (
+    <div className="medium h-[15vw] w-full flex justify-center items-center">
+      <h1 className="text-[6vw] text-black font-bold heading">
+        <span className="flip">Flip</span>
+        <span className="slide">Gears</span>
+      </h1>
+    </div>
+  );
 
-    return(
-        <>
-             <div className='bg-[#efeeed] w-full h-[15vw]'>
-            <div className='Medium w-full h-full bg-white rounded-b-[7vw] flex justify-center items-center '>
-                 <h1 className='text-[6vw]'>FlipGears</h1>
-            </div>
-            </div>
- 
-        </>
-    );
 
 }
 

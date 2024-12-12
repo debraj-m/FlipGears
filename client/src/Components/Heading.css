@@ -1,0 +1,45 @@
+/* Heading.css */
+.medium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .heading {
+    position: relative;
+    display: inline-flex;
+  }
+  
+  .flip {
+    display: inline-block;
+    animation: flipAnimation 2.5s forwards;
+  }
+  
+  .slide {
+    display: inline-block;
+    animation: slideAnimation 2.5s forwards;
+  }
+  
+  /* Keyframes for flip animation */
+  @keyframes flipAnimation {
+    0% {
+      transform: rotateZ(0);
+    }
+    50% {
+      transform: rotateZ(180deg);
+    }
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
+  
+  /* Keyframes for slide animation */
+  @keyframes slideAnimation {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  
