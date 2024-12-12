@@ -15,7 +15,7 @@ def validate_date(parsed_date):
 
 def parse_date_multiple_methods(date_str):
     try:
-        parsed_date=dateutil.parser.parse(date_str,fuzzy=False)
+        parsed_date=dateutil.parser.parse(date_str,dayfirst=True)
         if validate_date(parsed_date):
             return parsed_date
     except:
