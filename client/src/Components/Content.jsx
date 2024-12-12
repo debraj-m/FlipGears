@@ -3,6 +3,10 @@ import { BsBoxArrowInUpRight } from "react-icons/bs";
 
 function Content(){
 
+    const handleButtonClick = () => {
+        // Replace the URL with your desired link
+        window.open("https://drive.google.com/file/d/1cdE9Cxu1mHzI7QZmaEY2gVpdpp9SiMC2/view?usp=sharin", "_blank");
+      };
     
     return(
     <>
@@ -17,7 +21,7 @@ function Content(){
          <h1 className='text-[35px] leading-[40px] lg:text-[4vw]  text-center lg:leading-[5vw] text-zinc-800'>Revolut<span className='text-zinc-700'>ion</span><span className='text-zinc-600'>izing</span></h1>
          <p className='text-[35px] leading-[35px] lg:text-[4vw] w-[58%] lg:w-[50%] text-center lg:leading-[4vw]'>Quality Con<span className='text-zinc-700'>trol</span><span className='text-zinc-600'> with </span>Automa<span className='text-zinc-600'>tion</span>
          </p>
-         <button onClick={"https://drive.google.com/file/d/1GbC5lHYClepSwO95msLBsYS0Fq_cYB5S/view?usp=drivesdk"} className='Regular m-[1.6vh] lg:m-[1.3vw] rounded-[2vh] lg:rounded-[2vw] capitalize w-[15vh] h-[5vh] lg:w-[14vw] lg:h-[4vw] bg-black text-[1.5vh] lg:text-[1vw]  text-white px-[1vw] py-[1vw] flex justify-center items-center gap-[.6vw]  shadow-xl shadow-zinc-400 '>Our video< BsBoxArrowInUpRight size={"1.5rem"}/></button>
+         <button onClick={handleButtonClick} className='Regular m-[1.6vh] lg:m-[1.3vw] rounded-[2vh] lg:rounded-[2vw] capitalize w-[15vh] h-[5vh] lg:w-[14vw] lg:h-[4vw] bg-black text-[1.5vh] lg:text-[1vw]  text-white px-[1vw] py-[1vw] flex justify-center items-center gap-[.6vw]  shadow-xl shadow-zinc-400 '>Our video< BsBoxArrowInUpRight size={"1.5rem"}/></button>
        </div>
 
   

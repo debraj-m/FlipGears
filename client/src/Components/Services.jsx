@@ -6,22 +6,29 @@ function Services(){
         {
             img: './img/ui.png',
             name: 'Brand Detection Model',
-            description: 'Automated identification of brand specific products for efficient inventory categorization'
+            description: 'Automated identification of brand specific products for efficient inventory categorization',
+       
         },
         {
             img: './img/web.png',
             name: 'Freshness Detection Model',
-            description: 'Using predictive tech to model and assess the quality and freshness of perishable goods'
+            description: 'Using predictive tech to model and assess the quality and freshness of perishable goods',
+     
+
         },
         {
             img: './img/design.png',
             name: 'Object Count Model',
-            description: 'Utilizing computer vision technology to optimize object counting and tracking'
+            description: 'Utilizing computer vision technology to optimize object counting and tracking',
+      
+
         },
         {
             img: './img/dev.png',
-            name: 'MFG & Expiry Date Detection Model',
-            description: 'Leveraging OCR technology to streamline identification and recording of MFG and Expiry date in products'
+            name: 'Expiry Date Detection Model',
+            description: 'Leveraging OCR technology to streamline identification and recording of MFG and Expiry date in products',
+      
+
         }
     ];
 
@@ -31,7 +38,7 @@ function Services(){
         <>
         <div className='Regular h-[53vh] w-full lg:h-[40vw] bg-[#efeeed] relative rounded-b-[8vw] mb-[5vw] flex flex-col justify-center items-center gap-[2vh] lg:gap-[4vw]'>
 
-        <h1 className='relative text-center text-[2.5vh] lg:text-[2vw] w-[70%] lg:w-[40%] font-semibold leading-[2.7vh] lg:leading-[2vw]'>Explore our Machine Learing models that reduces human errors by 80-90% </h1>
+        <h1 className='relative text-center text-[2.5vh] lg:text-[2vw] w-[70%] lg:w-[45%] font-semibold leading-[2.7vh] lg:leading-[2.4vw]'>Explore our Machine Learning models designed to cut human errors by up to 40%.</h1>
 
         <div className='Regular m-[1.3vw] rounded-[2vw] capitalize  w-[12vh] h-[3vh] lg:w-[14vw] lg:h-[4vw] bg-white text-[1.2vh] lg:text-[1.2vw]  text-black px-[1vw] py-[1vw] flex justify-center items-center gap-[.6vw]  shadow-xl shadow-zinc-400 absolute top-[21%] lg:top-[21.5%] z-[1] '>ML Models </div>
        <hr className='bg-zinc-300 w-full h-[.2vw] lg:h-[.1vw] '/>
