@@ -3,12 +3,14 @@ import React, { useRef } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 const navItems = [
  
-  { label: "GitHub", icon: "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-github-512.png" },
+  { label: "GitHub", icon: "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-github-512.png", href: " https://github.com/debraj-m/FlipGears"},
  
-  { label: "powerpoint", icon: "https://cdn1.iconfinder.com/data/icons/bootstrap-vol-3/16/filetype-ppt-64.png" },
+  { label: "powerpoint", icon: "https://cdn1.iconfinder.com/data/icons/bootstrap-vol-3/16/filetype-ppt-64.png",href: "https://docs.google.com/presentation/d/1A0SZmdeClz5k_eUsEVA5PERbi_yvlFjsCuaRoEw5eGU/edit#slide=id.p6"},
 ];
 
-
+const handleClick = (index) => {
+      window.open(navItems[index].href, "_blank");
+};
 
 function Navbar() {
   return (
@@ -18,9 +20,11 @@ function Navbar() {
 
       {navItems.map((item, index) => (
         <div
+        onClick={()=>handleClick(index)}
           key={index}
           className="min-[300px]:hidden max-[600px]:hidden lg:flex cursor-pointer Medium text-[1.2vw] tracking-tight capitalize bg-white w-[12vw] h-[4vw] rounded-[2vw] flex justify-center items-center shadow-zinc-400 shadow-md gap-[0.4vw] "
         >
+          
           <span className="flex">{item.label}</span>
           <img className=" w-[2vw] h-[2vw]" src={item.icon} alt={`${item.label} icon`} />
         </div>
