@@ -17,7 +17,7 @@
 <li><h3>Expiry Date Detection Model</h3>
 <h4>Objective:</h4>
 The objective of this model is to extract product-specific information such as the expiry date to ensure that spoilt goods are removed from the inventory.<br>
-<h4>Tools Used:</h4>
+<h4>Tools Used:</h4>   
 <ul>
   <li><b>PaddleOCR:-</b>Text Extraction</li>
   <li><b>Scikit Image Library:-</b>Image Processing</li>
