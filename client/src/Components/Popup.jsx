@@ -49,8 +49,8 @@ const YoloPopup = ({ modelName, onClose }) => {
         window.location.origin.includes('127.0.0.1') ||
         window.location.origin.includes('0.0.0.0')
       ) {
-        // websocketUrl = `ws://127.0.0.1:8000/ws/${modelName}`
-         websocketUrl = `wss://flipgears-347795434098.asia-south1.run.app/ws/${modelName}`
+        websocketUrl = `ws://127.0.0.1:8000/ws/${modelName}`
+
       } else {
         websocketUrl = `wss://flipgears-347795434098.asia-south1.run.app/ws/${modelName}`
       }
