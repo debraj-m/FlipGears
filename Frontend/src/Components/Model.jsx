@@ -4,7 +4,8 @@ import YoloPopup from './Popup'
 function Model(){
     const [isPopupOpen, setIsPopupOpen] = useState({
         "state":false,
-        "modelName":""
+        "modelName":"",
+        displayName:""
     });
   
 
@@ -12,7 +13,7 @@ function Model(){
 const data=[
     {   
         img: './img/ui.png',
-        name: 'brand detection model',
+        name: 'Brand Detection Model',
         modelName:"brand-detection",
         purpose:" To automate the recognition and verification of the integrity and correctness of a packaging or label, ensuring quality control and streamlined inventory management.",
         description:"The Brand Detection Model brings together the power of AI and product recognition,  using the YOLOv8 architecture to identify logos and brands in real-time with incredible precision. Trained on a custom dataset of 800 brand images, it combines tools like Roboflow for crafting datasets, OpenCV for image processing, and Python libraries for seamless integration and flow. Implemented on a conveyor belt, this model detects brands, updates databases, and generates user-friendly CSV files to keep inventory management hassle-free. Say goodbye to human errors and inefficiencies—this solution ensures flawless classification, authentic products, and takes operational efficiency to the next level.",
@@ -31,7 +32,7 @@ const data=[
     },
     {
         img: './img/web.png',
-        name: 'freshness detection model',
+        name: 'Freshness Detection Model',
         modelName:"freshness-detection",
 
         purpose:"  To Automatically assess the quality of fruits and vegetables by detecting defects, discoloration, or irregular shapes, ensuring only high-quality produce are shipped to customers. ",
@@ -52,7 +53,7 @@ const data=[
     },
     {
         img: './img/design.png',
-        name: 'object count model',
+        name: 'Object Count Model',
         modelName:"count-model",
 
         purpose:" To recognize printed expiration dates in order to ensure that products are fresh, avoid wastage and improve inventory management. ",
@@ -94,10 +95,11 @@ const data=[
     }
 ];
 
-const handleClick = (modelName) => {
+const handleClick = (modelName,displayName) => {
     setIsPopupOpen({
         "state":true,
-        "modelName":modelName
+        "modelName":modelName,
+        "displayName":displayName,
     })
     
 }
@@ -120,10 +122,10 @@ const handleClick = (modelName) => {
 
             <div className='w-[45%] h-full gap-[2vw] flex flex-col relative justify-center left-[3vw] items-center'>
                 <div className='flex flex-col gap-[.5vw]'>
-                    <button onClick={()=>handleClick(elem.modelName)}  className='bg-white w-[12vh] h-[4vh] text-[1vh] lg:w-[13vw] lg:h-[4vw] lg:text-[1vw] capitalize rounded-[5vw]'>Use this Model</button>
+                    <button onClick={()=>handleClick(elem.modelName,elem.name)}  className='bg-white w-[12vh] h-[4vh] text-[1vh] lg:w-[13vw] lg:h-[4vw] lg:text-[1vw] capitalize rounded-[5vw]'>Use this Model</button>
                 <h3 className='w-[13vh] text-[1.1vh] lg:w-[13vw] lg:text-[1.1vw] capitalize flex justify-center'>(camera Access Required)</h3>
                 {isPopupOpen.state && (
-    <YoloPopup modelName={isPopupOpen.modelName }onClose={() => setIsPopupOpen(false)} />
+    <YoloPopup displayModelName={isPopupOpen.displayName} modelName={isPopupOpen.modelName }onClose={() => setIsPopupOpen(false)} />
     )}
                 </div>
                 {/* <h1 className='uppercase text-[2.5vh] lg:text-[3vw] '>or</h1>

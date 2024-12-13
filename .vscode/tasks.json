@@ -3,7 +3,7 @@
     "tasks": [
         {
             "label": "Run Uvicorn Server",
-            "type": "shell",
+            "type":"shell",
             "command": "uvicorn",
            
             "args": [

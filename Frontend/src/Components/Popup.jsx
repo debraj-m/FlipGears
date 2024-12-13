@@ -2,9 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import './Popup.css';
 
-const YoloPopup = ({ modelName, onClose }) => {
+const YoloPopup = ({ modelName, displayModelName, onClose }) => {
   const videoRef = useRef(null);
   const processedImageRef = useRef(null);
+  const videoFileInput = useRef(null);
+  const csvResults = useRef(null);
   const [ws, setWs] = useState(null);
   const [stream, setStream] = useState(null);
   const [csvLink, setCsvLink] = useState(null);
@@ -13,60 +15,55 @@ const YoloPopup = ({ modelName, onClose }) => {
   const [loadingMessage, setLoadingMessage] = useState('Checking system status...');
   const [isWaiting, setIsWaiting] = useState(true);
   const intervalRef = useRef(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const checkSystemStatus = async () => {
     try {
-        let url
+      let url;
       if (
         window.location.origin.includes('localhost') ||
         window.location.origin.includes('127.0.0.1') ||
         window.location.origin.includes('0.0.0.0')
       ) {
-        url = `http://localhost:8000/status`
-
+        url = `http://localhost:8000/status`;
       } else {
-        url = `https://asia-south1-assisto-dev-52a1d.cloudfunctions.net/proxy-1`
+        url = `https://asia-south1-assisto-dev-52a1d.cloudfunctions.net/proxy-1`;
       }
+
       const response = await axios.get(url);
-      
-      console.log('Response Status:', response.status);
-  
       if (response.data.status === 'running') {
         setIsReady(true);
         setLoadingMessage('Containers are up, ready to start stream...');
         setIsWaiting(false);
       } else {
         setLoadingMessage('System not ready, retrying...');
-        setTimeout(checkSystemStatus, 5000);  // Retry after 5 seconds
+        setTimeout(checkSystemStatus, 5000);
       }
     } catch (error) {
       console.error('Error checking system status:', error.message);
       setLoadingMessage(`Error checking system status: ${error.message}, retrying...`);
-      setTimeout(checkSystemStatus, 5000);  // Retry after 5 seconds
+      setTimeout(checkSystemStatus, 5000);
     }
   };
 
   const startStreaming = async () => {
     try {
-     
       if (ws) return;
 
       const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
       videoRef.current.srcObject = videoStream;
       setStream(videoStream);
+
       let websocketUrl;
       if (
         window.location.origin.includes('localhost') ||
         window.location.origin.includes('127.0.0.1') ||
         window.location.origin.includes('0.0.0.0')
       ) {
-        websocketUrl = `ws://127.0.0.1:8000/ws/${modelName}`
-
+        websocketUrl = `ws://127.0.0.1:8000/ws/${modelName}`;
       } else {
-        websocketUrl = `wss://flipgears-347795434098.asia-south1.run.app/ws/${modelName}`
+        websocketUrl = `wss://flipgears-347795434098.asia-south1.run.app/ws/${modelName}`;
       }
-      
-   
 
       const websocket = new WebSocket(websocketUrl);
       websocket.onopen = () => {
@@ -86,7 +83,6 @@ const YoloPopup = ({ modelName, onClose }) => {
           const csvUrl = URL.createObjectURL(csvBlob);
           setCsvLink(csvUrl);
         } else if (message.type === 'stop') {
-          console.log('Server indicated safe to close connection.');
           stopStreaming();
         }
       };
@@ -121,7 +117,6 @@ const YoloPopup = ({ modelName, onClose }) => {
       intervalRef.current = setInterval(sendFrame, 120);
       setWs(websocket);
       setIsStreaming(true);
-      setIsWaiting(false);  // System is ready, stop showing loading message
     } catch (error) {
       console.error('Error accessing webcam: ', error);
     }
@@ -140,9 +135,52 @@ const YoloPopup = ({ modelName, onClose }) => {
     setIsStreaming(false);
   };
 
+  const uploadVideo = async () => {
+    const file = videoFileInput.current.files[0];
+    if (file && file.size <= 10 * 1024 * 1024) {
+      const formData = new FormData();
+      formData.append('file', file);
+      setIsProcessing(true);  // Set loading state to true
+      let url;
+      if (
+        window.location.origin.includes('localhost') ||
+        window.location.origin.includes('127.0.0.1') ||
+        window.location.origin.includes('0.0.0.0')
+      ) {
+        url = `http://localhost:8000/process_video/${modelName}`;
+      } else {
+        url = `https://flipgears-347795434098.asia-south1.run.app/process_video/${modelName}`;
+      }
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+       
+          const csvUrl = URL.createObjectURL(blob);
+          setCsvLink(csvUrl);
+         
+        } else {
+          alert('Error processing the video.');
+        }
+      } catch (error) {
+        console.error('Error uploading video:', error);
+        alert('Error uploading video.');
+      }
+      finally {
+        setIsProcessing(false);  // Set loading state to false
+      }
+    } else {
+      alert('File size exceeds 10 MB or no file selected.');
+    }
+  };
+
   useEffect(() => {
     checkSystemStatus();
-
     return () => {
       stopStreaming();
     };
@@ -159,7 +197,7 @@ const YoloPopup = ({ modelName, onClose }) => {
   return (
     <div className="yolo-popup">
       <div className="popup-header">
-        <h1>Real-Time YOLO Object Detection</h1>
+        <h1>Real-Time {displayModelName} Detection</h1>
         <button className="close-button" onClick={() => { stopStreaming(); onClose(); }}>Close</button>
       </div>
       <div className="stream-container">
@@ -170,6 +208,17 @@ const YoloPopup = ({ modelName, onClose }) => {
         <button className="control-button" onClick={startStreaming} disabled={isStreaming}>Start Streaming</button>
         <button className="control-button" onClick={stopStreaming} disabled={!isStreaming}>Stop Streaming</button>
       </div>
+      <div className="upload-section">
+        <h2>Upload Video:</h2>
+        <input type="file" ref={videoFileInput} accept="video/*" />
+        <button className="control-button" onClick={uploadVideo}>Upload and Process</button>
+        <div ref={csvResults}></div>
+      </div>
+      {isProcessing && (
+  <div className="loading-overlay">
+    <div className="loading-spinner"></div>
+  </div>
+)}
       {csvLink && (
         <div className="csv-download">
           <h2>Detection Results (CSV):</h2>
