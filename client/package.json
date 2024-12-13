@@ -12,6 +12,7 @@
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.11.1",
     "@studio-freight/lenis": "^1.0.0",
+    "axios": "^1.7.9",
     "lenis": "^1.1.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
