@@ -12,7 +12,7 @@ const YoloPopup = ({ modelName, displayModelName, onClose }) => {
   const [csvLink, setCsvLink] = useState(null);
   const [isStreaming, setIsStreaming] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const [loadingMessage, setLoadingMessage] = useState('Checking system status...');
+  const [loadingMessage, setLoadingMessage] = useState('Checking system status, It may take up to a min...');
   const [isWaiting, setIsWaiting] = useState(true);
   const intervalRef = useRef(null);
   const [isProcessing, setIsProcessing] = useState(false);
