@@ -16,7 +16,18 @@ const YoloPopup = ({ modelName, onClose }) => {
 
   const checkSystemStatus = async () => {
     try {
-      const response = await axios.get('https://asia-south1-assisto-dev-52a1d.cloudfunctions.net/proxy-1');
+        let url
+      if (
+        window.location.origin.includes('localhost') ||
+        window.location.origin.includes('127.0.0.1') ||
+        window.location.origin.includes('0.0.0.0')
+      ) {
+        url = `http://localhost:8000/status`
+
+      } else {
+        url = `https://asia-south1-assisto-dev-52a1d.cloudfunctions.net/proxy-1`
+      }
+      const response = await axios.get(url);
       
       console.log('Response Status:', response.status);
   

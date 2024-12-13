@@ -22,9 +22,18 @@ from ml_models.freshness_detection_model.freshness_detection_model import (
 )
 from models.base_model import DetectionModels
 from services.websocket_service import WebSocketService
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+# Add the CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust this to restrict origins if needed
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/status")
 def get_status():

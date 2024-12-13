@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Vite Dev Server",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"],
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "preLaunchTask": "Run Uvicorn Server",
+            "cwd": "${workspaceFolder}/Frontend",
+            "console": "integratedTerminal"
+        }
+    ]
+}

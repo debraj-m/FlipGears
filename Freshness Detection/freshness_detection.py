@@ -6,7 +6,7 @@ import time
 from skimage.metrics import structural_similarity
 import datetime
 from datetime import datetime
-model = YOLO(r"yolo11n.pt")
+model = YOLO("t.pt")
 target_classes = ["apple", "banana","orange"]
 class_indices = [list(model.names.keys())[list(model.names.values()).index(cls)] 
                          for cls in target_classes 

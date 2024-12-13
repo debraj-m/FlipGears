@@ -41,6 +41,7 @@ class FreshnessDetectionModel(BaseModel):
 
         # Compute SSIM (Structural Similarity Index) between the current and previous frame
         ssim = structural_similarity(frame_curr_g, frame_prev_g)
+        detection_made = False
 
         # Check if SSIM is below the threshold to process frame (indicating a significant change)
         if ssim <= 0.3:
@@ -78,6 +79,21 @@ class FreshnessDetectionModel(BaseModel):
                             (0, 0, 255),
                             2,
                         )
+                    detection_made = True
+
+        # Add "DONE!" text if detection was made
+        if detection_made and write:
+            height, width, _ = frame.shape
+            cv.putText(
+                frame,
+                "DONE!",
+                (width // 3, height // 3),
+                cv.FONT_HERSHEY_SIMPLEX,
+                2,
+                (0, 255, 0),
+                3,
+            )
+
         return frame
 
     def process_from_video(self, video_bytes: BytesIO):
