@@ -1,0 +1,96 @@
+
+.yolo-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+  }
+  
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  /* Row layout for video and processed frame */
+  .stream-container {
+    display: flex;
+    flex-direction: row; /* Align items in a row */
+    justify-content: space-between; /* Space out the video and processed image */
+    gap: 10px; /* Space between video and processed frame */
+    margin-top: 20px;
+  }
+  
+  .stream-container .video-stream,
+  .stream-container .processed-frame {
+    flex: 1;
+    max-width: 48%; /* Ensures both elements take up equal width */
+    height: auto;
+  }
+  .popup-controls {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .control-button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .control-button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .csv-download {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .csv-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .loading-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .loading-message {
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+  

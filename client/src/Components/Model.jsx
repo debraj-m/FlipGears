@@ -1,13 +1,19 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { BsBoxArrowInUpRight } from "react-icons/bs";
-
+import YoloPopup from './Popup'
 function Model(){
+    const [isPopupOpen, setIsPopupOpen] = useState({
+        "state":false,
+        "modelName":""
+    });
+  
 
 
 const data=[
     {   
         img: './img/ui.png',
         name: 'brand detection model',
+        modelName:"brand-detection",
         purpose:" To automate the recognition and verification of the integrity and correctness of a packaging or label, ensuring quality control and streamlined inventory management.",
         description:"The Brand Detection Model brings together the power of AI and product recognition,  using the YOLOv8 architecture to identify logos and brands in real-time with incredible precision. Trained on a custom dataset of 800 brand images, it combines tools like Roboflow for crafting datasets, OpenCV for image processing, and Python libraries for seamless integration and flow. Implemented on a conveyor belt, this model detects brands, updates databases, and generates user-friendly CSV files to keep inventory management hassle-free. Say goodbye to human errors and inefficiencies—this solution ensures flawless classification, authentic products, and takes operational efficiency to the next level.",
         images:[
@@ -26,6 +32,8 @@ const data=[
     {
         img: './img/web.png',
         name: 'freshness detection model',
+        modelName:"freshness-detection",
+
         purpose:"  To Automatically assess the quality of fruits and vegetables by detecting defects, discoloration, or irregular shapes, ensuring only high-quality produce are shipped to customers. ",
         description:"The Freshness Detection Model improves quality checks by using advanced computer vision to ensure only the freshest produce reaches customers. Powered by YOLOv8 and trained on a robust dataset of 2,000 images, it evaluates key freshness indicators like color, texture, and shape in real-time. With seamless integration through tools like OpenCV and Python libraries, the system processes images, extracts features, and updates your database with user-friendly CSV outputs. By automating freshness analysis, this model reduces spoilage, guarantees top-notch quality, and keeps customers happy!",
         images:[
@@ -45,6 +53,8 @@ const data=[
     {
         img: './img/design.png',
         name: 'object count model',
+        modelName:"count-model",
+
         purpose:" To recognize printed expiration dates in order to ensure that products are fresh, avoid wastage and improve inventory management. ",
         description:"The Expiry Date Detection Model improves product tracking by automating the identification of expiry dates with remarkable accuracy. Using PaddleOCR for text recognition and OpenCV for image preprocessing, it extracts and updates expiration data directly into the inventory system. From preprocessing to real-time database updates, the model ensures expired products are flagged, ensuring only compliant items remain. Not only does this eliminate manual checks—this smart solution also guarantees accuracy, prevents expired goods from slipping through, and streamlines operations effortlessly. ",
         images:[
@@ -63,6 +73,8 @@ const data=[
     {
         img: './img/dev.png',
         name: 'Expiry Date Detection Model',
+        modelName:"mfg-expiry-detection-model",
+
         purpose:" To accurately detect and count the number of objects in a given image or video feed, enabling real-time inventory updates and improving operational efficiency.",
         description:"The Object Count Model improves inventory management by automating the counting process. Powered by YOLOv8 and trained on a custom dataset of 100+ images, it detects and counts objects in real-time as they move along the conveyor belt. With seamless integration through OpenCV and Python, the model processes data, updates the database, and ensures effortless tracking. By eliminating manual counting, it enhances accuracy, saves time, and boosts the overall efficiency of operations.",
         images:[
@@ -82,8 +94,12 @@ const data=[
     }
 ];
 
-const handleClick = () => {
-
+const handleClick = (modelName) => {
+    setIsPopupOpen({
+        "state":true,
+        "modelName":modelName
+    })
+    
 }
 
     return(
@@ -104,11 +120,15 @@ const handleClick = () => {
 
             <div className='w-[45%] h-full gap-[2vw] flex flex-col relative justify-center left-[3vw] items-center'>
                 <div className='flex flex-col gap-[.5vw]'>
-                    <button className='bg-white w-[12vh] h-[4vh] text-[1vh] lg:w-[13vw] lg:h-[4vw] lg:text-[1vw] capitalize rounded-[5vw]'>Use this Model</button>
-                <h3 className='w-[13vh] text-[1.1vh] lg:w-[13vw] lg:text-[1.1vw] capitalize flex justify-center'>(camera Access Required)</h3></div>
-                <h1 className='uppercase text-[2.5vh] lg:text-[3vw] '>or</h1>
+                    <button onClick={()=>handleClick(elem.modelName)}  className='bg-white w-[12vh] h-[4vh] text-[1vh] lg:w-[13vw] lg:h-[4vw] lg:text-[1vw] capitalize rounded-[5vw]'>Use this Model</button>
+                <h3 className='w-[13vh] text-[1.1vh] lg:w-[13vw] lg:text-[1.1vw] capitalize flex justify-center'>(camera Access Required)</h3>
+                {isPopupOpen.state && (
+    <YoloPopup modelName={isPopupOpen.modelName }onClose={() => setIsPopupOpen(false)} />
+    )}
+                </div>
+                {/* <h1 className='uppercase text-[2.5vh] lg:text-[3vw] '>or</h1>
                 <button className='bg-white w-[11vh] h-[4vh] text-[1vh] lg:w-[13vw] lg:h-[4vw] lg:text-[1vw] capitalize rounded-[5vw]'>upload video</button>
-                <button className='flex items-center gap-[.5vw] capitalize text-[1.4vh] lg:text-[1.4vw]'>< BsBoxArrowInUpRight size={"1.4em"}/>get CSV file</button>
+                <button className='flex items-center gap-[.5vw] capitalize text-[1.4vh] lg:text-[1.4vw]'>< BsBoxArrowInUpRight size={"1.4em"}/>get CSV file</button> */}
             </div>
             <div className='w-[55%] h-full relative  flex  '>
             <p className='w-[80%] lg:w-[75%] h-full font-medium text-[1vh] lg:text-[1.4vw] relative top-[4vh] lg:top-[3vw] lg:left-[4vw]'>{elem.description}</p>
