@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from skimage.metrics import structural_similarity
 from ultralytics import YOLO
-
+from datetime import datetime
 from models.base_model import BaseModel
 
 
@@ -23,9 +23,9 @@ class BrandLogoDetectionModel(BaseModel):
         self.timestamp = []
         self.brand = []
         self.start_time = time.time()
-        self.class_names = (
-            self.model.names
-        )  # Dictionary relating class_id to class_name
+        self.class_names = (self.model.names)
+        self.latest_detection_time=time.time()
+        self.prev_class_name='None'
 
     def name(self):
         return self._name
@@ -33,11 +33,7 @@ class BrandLogoDetectionModel(BaseModel):
     def process_frame(self, frame, prev_frame=None, write=True):
         # Convert current and previous frames to grayscale
         frame_curr_g = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-        frame_prev_g = (
-            cv.cvtColor(prev_frame, cv.COLOR_BGR2GRAY)
-            if prev_frame is not None
-            else np.zeros_like(frame_curr_g)
-        )
+        frame_prev_g = cv.cvtColor(prev_frame, cv.COLOR_BGR2GRAY)
 
         # Compute SSIM (Structural Similarity Index) between the current and previous frame
         ssim = structural_similarity(frame_curr_g, frame_prev_g)
@@ -52,9 +48,10 @@ class BrandLogoDetectionModel(BaseModel):
                     class_id = int(box.cls[0].item())
                     class_name = self.class_names.get(class_id, "Unknown")
                     confidence = box.conf[0].item()
-
+                    detection_time=time.time()
+                    if(detection_time-self.latest_detection_time>10 or self.prev_class_name!=class_name):
                     # Draw rectangle and label on frame
-                    if write:
+                      if write:
                         cv.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                         cv.putText(
                             frame,
@@ -65,14 +62,11 @@ class BrandLogoDetectionModel(BaseModel):
                             (0, 0, 255),
                             2,
                         )
-
-                    # Increment detection count for the corresponding brand
-                    if class_name in self.detections.keys():
-                        self.detections[class_name] += 1
-                        self.timestamp.append(time.time() - self.start_time)
-                        self.brand.append(class_name)
-                    else:
-                        self.detections[class_name] = 0
+                      # Increment detection count for the corresponding brand
+                      self.timestamp.append(datetime.now())
+                      self.brand.append(class_name)
+                      self.latest_detection_time=time.time()
+                      self.prev_class_name=class_name
 
         return frame
 
@@ -89,29 +83,17 @@ class BrandLogoDetectionModel(BaseModel):
                 raise ValueError("Failed to open video stream from bytes")
 
             # Concurrently process frames
-            with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-                futures = []
-                prev_frame = None
-                frame_count = 0
-                while True:
-                    ret, frame = video_stream.read()  # Read the next frame
-                    if not ret:
-                        break  # Exit loop if no more frames
-
-                    # Submit frame processing task to the executor
-                    futures.append(
-                        executor.submit(
-                            self.process_frame, frame, prev_frame, write=False
-                        )
-                    )
-
-                    # Update prev_frame for next comparison
-                    prev_frame = frame
-
-                # Wait for all tasks to complete
-                for future in concurrent.futures.as_completed(futures):
-                    future.result()  # Propagate exceptions, if any
-
+   
+   
+            prev_frame = None
+            frame_count = 0
+            while True:
+                ret, frame = video_stream.read()  # Read the next frame
+                if not ret:
+                    break  # Exit loop if no more frames
+                if prev_frame is not None:
+                 self.process_frame(frame, prev_frame, write=True)
+                prev_frame = frame
             video_stream.release()
 
     def get_detections_csv(self) -> BytesIO:
