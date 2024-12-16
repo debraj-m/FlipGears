@@ -25,7 +25,7 @@ class WebSocketService:
 
     def process_frame(self, frame):
         """Process the frame using the selected model."""
-        self.model.process_frame(frame)
+        self.model.process_frame(frame,self.prev_frame)
         self.prev_frame = frame.copy()
         return frame
 
