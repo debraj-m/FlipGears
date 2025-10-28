@@ -22,7 +22,7 @@ The objective of this model is to extract product-specific information such as t
   <li><b>PaddleOCR:-</b>Text Extraction</li>
   <li><b>Scikit Image Library:-</b>Image Processing</li>
   <li><b>OpenCV:-</b>For taking video input</li>
-   <li><b>NumPy,Pandas:-</b>For storing the detections to a CSV file.</li>
+   <li><b>NumPy, Pandas:-</b>For storing the detections to a CSV file.</li>
 </ul>
 <h4>Output:</h4>
 The extracted dataset is integrated into a CSV file for inventory management.
@@ -39,7 +39,7 @@ The in-house OCR solution avoids reliance on expensive third-party tools and can
   <ul>
     <li><b>YOLOv8 Model:-</b>To perform classification on input video on the basis of detected brands</li>
     <li><b>OpenCV:-</b>For taking video input</li>
-    <li><b>NumPy,Pandas:-</b>For storing the detections to a CSV file.</li>
+    <li><b>NumPy, Pandas:-</b>For storing the detections to a CSV file.</li>
   </ul>
   <h4>Output:</h4>
 Brand-specific classifications are recorded in the inventory system, ensuring organized stocktaking.
@@ -57,7 +57,7 @@ Brand-specific classifications are recorded in the inventory system, ensuring or
   <ul>
     <li><b>YOLOv8 Model:-</b>To perform classification on input video on the basis of detected brands</li>
     <li><b>OpenCV:-</b>For taking video input</li>
-    <li><b>NumPyPandas:-</b>For storing the detections to a CSV file.</li>
+    <li><b>NumPy, Pandas:-</b>For storing the detections to a CSV file.</li>
   </ul>
   <h4>Output:</h4>
 A CSV file is generated, indicating the approximate shelf life of perishable products.
@@ -75,7 +75,7 @@ A CSV file is generated, indicating the approximate shelf life of perishable pro
   <ul>
     <li><b>YOLOv8-Segmentation Model:-</b>To perform instance segmentation on input video and infer the number of products on screen</li>
     <li><b>OpenCV:-</b>For taking video input</li>
-    <li><b>NumPyPandas:-</b>For storing the detections to a CSV file.</li>
+    <li><b>NumPy, Pandas:-</b>For storing the detections to a CSV file.</li>
   </ul>
   <h4>Output:</h4>
 Counts the number of objects in a given image or video.
